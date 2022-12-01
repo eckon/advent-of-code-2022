@@ -1,17 +1,34 @@
+use std::fs::File;
+
 mod puzzle;
 
 fn main() {
-    // get first passed argument to cli
-    let Ok(day) = std::env::args()
-        .nth(1)
-        .unwrap_or_else(|| 0.to_string())
-        .parse::<u8>() else {
-            println!("Passed number can be parsed into int");
+    // get first passed argument to cli for day selection
+    let Some(day_string) = std::env::args()
+        .nth(1) else {
+            println!("First argument needs to be day");
             return
         };
 
+    let Ok(day) = day_string.parse::<u8>() else {
+            println!("First argument needs to be day as number");
+            return
+        };
+
+    // get secound passed argument to cli for file path
+    let Some(path) = std::env::args()
+        .nth(2) else {
+            println!("Secound argument needs to be the path to the challenge");
+            return
+        };
+
+    let Ok(file) = File::open(&path) else {
+        println!("Can not open file \"{path}\"");
+        return
+    };
+
     match day {
-        1 => puzzle::day1::run(),
+        1 => println!("Result: {}", puzzle::day1::run(file)),
         not_found_day => {
             println!("Day \"{not_found_day}\" implementation was not found");
             println!("To run specific advent of code day, pass the day [1, 2, ..., 25]");

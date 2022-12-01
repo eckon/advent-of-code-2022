@@ -4,6 +4,6 @@ My try to complete the different [puzzles](https://adventofcode.com/2022) with r
 
 ## How to call
 ```bash
-# cargo run <DAY-NUMBER>
-$ cargo run 1
+# cargo run <DAY-NUMBER> <PATH-TO-INPUT>
+$ cargo run 1 ./challenge.txt
 ```
