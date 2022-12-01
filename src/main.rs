@@ -11,9 +11,9 @@ fn main() {
         };
 
     let Ok(day) = day_string.parse::<u8>() else {
-            println!("First argument needs to be day as number");
-            return
-        };
+        println!("First argument needs to be day as number");
+        return
+    };
 
     // get secound passed argument to cli for file path
     let Some(path) = std::env::args()
@@ -28,7 +28,10 @@ fn main() {
     };
 
     match day {
-        1 => println!("Result: {}", puzzle::day1::run(file)),
+        1 => {
+            println!("Result part 1: {}", puzzle::day1::part1(&file));
+            println!("Result part 2: {}", puzzle::day1::part2(&file));
+        }
         not_found_day => {
             println!("Day \"{not_found_day}\" implementation was not found");
             println!("To run specific advent of code day, pass the day [1, 2, ..., 25]");
