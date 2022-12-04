@@ -48,7 +48,7 @@ fn group_file(mut file: &File) -> Vec<i32> {
 
 #[cfg(test)]
 mod tests {
-    use crate::puzzle::day1::{part1, part2};
+    use crate::puzzle::day1::*;
     use std::fs::File;
 
     #[test]

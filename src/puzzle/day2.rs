@@ -132,7 +132,7 @@ fn calculate_faked_points(game: &str) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::puzzle::day2::{calculate_points, part1, part2};
+    use crate::puzzle::day2::*;
     use std::fs::File;
 
     #[test]
