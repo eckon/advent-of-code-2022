@@ -53,14 +53,14 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        let file = File::open("./src/puzzle/day1-example.txt").unwrap();
+        let file = File::open("./src/puzzle/examples/day1.txt").unwrap();
         let result = part1(&file);
         assert_eq!(result, 24000);
     }
 
     #[test]
     fn test_part2() {
-        let file = File::open("./src/puzzle/day1-example.txt").unwrap();
+        let file = File::open("./src/puzzle/examples/day1.txt").unwrap();
         let result = part2(&file);
         assert_eq!(result, 45000);
     }
