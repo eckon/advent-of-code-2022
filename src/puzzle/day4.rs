@@ -21,7 +21,6 @@ pub fn part1(mut file: &File) -> i32 {
         })
         .filter(|pair| !pair.0.is_empty())
         .filter(|pair| {
-            // println!("{:?}", pair)
             let first_values = pair
                 .0
                 .split('-')
@@ -67,7 +66,6 @@ pub fn part2(mut file: &File) -> i32 {
         })
         .filter(|pair| !pair.0.is_empty())
         .filter(|pair| {
-            // println!("{:?}", pair)
             let first_values = pair
                 .0
                 .split('-')
@@ -80,19 +78,15 @@ pub fn part2(mut file: &File) -> i32 {
                 .map(|c| c.parse().unwrap())
                 .collect::<Vec<i32>>();
 
-            if first_values[0] >= secound_values[0] && first_values[0] <= secound_values[1] {
+            let first_range = first_values[0]..=first_values[1];
+            if first_range.contains(&secound_values[0]) || first_range.contains(&secound_values[1])
+            {
                 return true;
             }
 
-            if first_values[1] >= secound_values[0] && first_values[1] <= secound_values[1] {
-                return true;
-            }
-
-            if secound_values[0] >= first_values[0] && secound_values[0] <= first_values[1] {
-                return true;
-            }
-
-            if secound_values[1] >= first_values[0] && secound_values[1] <= first_values[1] {
+            let secound_range = secound_values[0]..=secound_values[1];
+            if secound_range.contains(&first_values[0]) || secound_range.contains(&first_values[1])
+            {
                 return true;
             }
 
