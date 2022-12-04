@@ -1,6 +1,5 @@
 use std::{
     collections::HashSet,
-    convert::identity,
     fs::File,
     io::{Read, Seek, SeekFrom},
 };
@@ -15,19 +14,15 @@ pub fn part1(mut file: &File) -> i32 {
     content
         .split('\n')
         .map(|line| line.split_at(line.len() / 2))
-        .map(|tuple| {
-            let first_pocket: HashSet<char> = HashSet::from_iter(tuple.0.chars());
-            let secound_pocket: HashSet<char> = HashSet::from_iter(tuple.1.chars());
+        .filter_map(|tuple| {
+            let first_pocket = tuple.0.chars().collect::<HashSet<char>>();
+            let secound_pocket = tuple.1.chars().collect::<HashSet<char>>();
             let intersection = first_pocket
                 .intersection(&secound_pocket)
                 .collect::<Vec<&char>>();
 
-            match intersection.first() {
-                Some(intersection) => Some(intersection.clone().clone()),
-                None => None,
-            }
+            intersection.first().map(|i| *<&char>::clone(i))
         })
-        .filter_map(identity)
         .map(|found_item| {
             // A starts at 65, but it should be 27, so substract difference
             if found_item.is_uppercase() {
@@ -51,22 +46,22 @@ pub fn part2(mut file: &File) -> i32 {
         .split('\n')
         .collect::<Vec<&str>>()
         .chunks(3)
-        // we get an empty chunk -> filter it out
+        // we get an empty chunk at the end -> filter it out
         .take_while(|chunk| chunk.len() > 1)
         .map(|chunk| {
-            let first_bag: HashSet<char> = HashSet::from_iter(chunk[0].chars());
-            let secound_bag: HashSet<char> = HashSet::from_iter(chunk[1].chars());
-            let third_bag: HashSet<char> = HashSet::from_iter(chunk[2].chars());
-
-            // use two intersections (i did not find a better way to do it, without many conversions)
-            first_bag
-                .intersection(&secound_bag)
-                .map(char::to_owned)
-                .collect::<HashSet<char>>()
-                .intersection(&third_bag)
-                .map(char::to_owned)
-                .collect::<Vec<char>>()
-                .first()
+            chunk
+                .iter()
+                .map(|c| c.chars().collect::<HashSet<char>>())
+                .collect::<Vec<_>>()
+                .into_iter()
+                .reduce(|acc, ele| {
+                    acc.intersection(&ele)
+                        .map(char::to_owned)
+                        .collect::<HashSet<char>>()
+                })
+                .unwrap()
+                .iter()
+                .next()
                 .unwrap()
                 .to_owned()
         })
