@@ -1,10 +1,5 @@
-use std::{
-    fs::File,
-    io::{Read, Seek, SeekFrom},
-};
-
-pub fn part1(file: &File) -> i32 {
-    let mut grouped_numbers = group_file(file);
+pub fn part1(content: &str) -> i32 {
+    let mut grouped_numbers = group_content(content);
 
     // return the highest value of all grouped numbers
     grouped_numbers.sort_unstable();
@@ -12,8 +7,8 @@ pub fn part1(file: &File) -> i32 {
     grouped_numbers.iter().take(1).sum::<i32>()
 }
 
-pub fn part2(file: &File) -> i32 {
-    let mut grouped_numbers = group_file(file);
+pub fn part2(content: &str) -> i32 {
+    let mut grouped_numbers = group_content(content);
 
     // return a sum of the three highes values
     grouped_numbers.sort_unstable();
@@ -21,14 +16,7 @@ pub fn part2(file: &File) -> i32 {
     grouped_numbers.iter().take(3).sum::<i32>()
 }
 
-fn group_file(mut file: &File) -> Vec<i32> {
-    // as we re-read the same file, set the cursor to the beginning
-    file.seek(SeekFrom::Start(0)).unwrap();
-
-    let mut content = String::new();
-    let mut file = <&std::fs::File>::clone(&file);
-    file.read_to_string(&mut content).unwrap();
-
+fn group_content(content: &str) -> Vec<i32> {
     let mut grouped_numbers: Vec<i32> = vec![];
     let mut acc = vec![];
 
@@ -49,19 +37,19 @@ fn group_file(mut file: &File) -> Vec<i32> {
 #[cfg(test)]
 mod tests {
     use crate::puzzle::day1::*;
-    use std::fs::File;
+    use std::fs::read_to_string;
 
     #[test]
     fn test_part1() {
-        let file = File::open("./src/puzzle/examples/day1.txt").unwrap();
-        let result = part1(&file);
+        let content = read_to_string("./src/puzzle/examples/day1.txt").unwrap();
+        let result = part1(&content);
         assert_eq!(result, 24000);
     }
 
     #[test]
     fn test_part2() {
-        let file = File::open("./src/puzzle/examples/day1.txt").unwrap();
-        let result = part2(&file);
+        let content = read_to_string("./src/puzzle/examples/day1.txt").unwrap();
+        let result = part2(&content);
         assert_eq!(result, 45000);
     }
 }

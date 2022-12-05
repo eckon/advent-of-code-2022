@@ -1,5 +1,3 @@
-use std::fs::File;
-
 mod puzzle;
 
 fn main() {
@@ -22,27 +20,31 @@ fn main() {
             return
         };
 
-    let Ok(file) = File::open(&path) else {
-        println!("Can not open file \"{path}\"");
+    let Ok(content) = std::fs::read_to_string(&path) else {
+        println!("Can not read from file \"{path}\"");
         return
     };
 
     match day {
         1 => {
-            println!("Result part 1: {}", puzzle::day1::part1(&file));
-            println!("Result part 2: {}", puzzle::day1::part2(&file));
+            println!("Result part 1: {}", puzzle::day1::part1(&content));
+            println!("Result part 2: {}", puzzle::day1::part2(&content));
         }
         2 => {
-            println!("Result part 1: {}", puzzle::day2::part1(&file));
-            println!("Result part 2: {}", puzzle::day2::part2(&file));
+            println!("Result part 1: {}", puzzle::day2::part1(&content));
+            println!("Result part 2: {}", puzzle::day2::part2(&content));
         }
         3 => {
-            println!("Result part 1: {}", puzzle::day3::part1(&file));
-            println!("Result part 2: {}", puzzle::day3::part2(&file));
+            println!("Result part 1: {}", puzzle::day3::part1(&content));
+            println!("Result part 2: {}", puzzle::day3::part2(&content));
         }
         4 => {
-            println!("Result part 1: {}", puzzle::day4::part1(&file));
-            println!("Result part 2: {}", puzzle::day4::part2(&file));
+            println!("Result part 1: {}", puzzle::day4::part1(&content));
+            println!("Result part 2: {}", puzzle::day4::part2(&content));
+        }
+        5 => {
+            println!("Result part 1: {}", puzzle::day5::part1(&content));
+            println!("Result part 2: {}", puzzle::day5::part2(&content));
         }
         not_found_day => {
             println!("Day \"{not_found_day}\" implementation was not found");

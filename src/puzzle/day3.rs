@@ -1,16 +1,6 @@
-use std::{
-    collections::HashSet,
-    fs::File,
-    io::{Read, Seek, SeekFrom},
-};
+use std::collections::HashSet;
 
-pub fn part1(mut file: &File) -> i32 {
-    file.seek(SeekFrom::Start(0)).unwrap();
-
-    let mut content = String::new();
-    let mut file = <&std::fs::File>::clone(&file);
-    file.read_to_string(&mut content).unwrap();
-
+pub fn part1(content: &str) -> i32 {
     content
         .split('\n')
         .map(|line| line.split_at(line.len() / 2))
@@ -35,13 +25,7 @@ pub fn part1(mut file: &File) -> i32 {
         .sum::<i32>()
 }
 
-pub fn part2(mut file: &File) -> i32 {
-    file.seek(SeekFrom::Start(0)).unwrap();
-
-    let mut content = String::new();
-    let mut file = <&std::fs::File>::clone(&file);
-    file.read_to_string(&mut content).unwrap();
-
+pub fn part2(content: &str) -> i32 {
     content
         .split('\n')
         .collect::<Vec<&str>>()
@@ -80,19 +64,19 @@ pub fn part2(mut file: &File) -> i32 {
 #[cfg(test)]
 mod tests {
     use crate::puzzle::day3::*;
-    use std::fs::File;
+    use std::fs::read_to_string;
 
     #[test]
     fn test_part1() {
-        let file = File::open("./src/puzzle/examples/day3.txt").unwrap();
-        let result = part1(&file);
+        let content = read_to_string("./src/puzzle/examples/day3.txt").unwrap();
+        let result = part1(&content);
         assert_eq!(result, 157);
     }
 
     #[test]
     fn test_part2() {
-        let file = File::open("./src/puzzle/examples/day3.txt").unwrap();
-        let result = part2(&file);
+        let content = read_to_string("./src/puzzle/examples/day3.txt").unwrap();
+        let result = part2(&content);
         assert_eq!(result, 70);
     }
 }
