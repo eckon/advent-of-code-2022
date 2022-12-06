@@ -64,19 +64,15 @@ fn calculate_points(game: &str) -> i32 {
     let my_sign = pairs.get(1).unwrap().to_owned();
     let enemy_sign = pairs.first().unwrap().to_owned();
 
-    let my_token = match my_sign {
-        "X" => Token::Rock,
-        "Y" => Token::Paper,
-        "Z" => Token::Sissor,
-        _ => return 0,
+    let match_sign = |sign: &str| match sign {
+        "A" | "X" => Some(Token::Rock),
+        "B" | "Y" => Some(Token::Paper),
+        "C" | "Z" => Some(Token::Sissor),
+        _ => None,
     };
 
-    let enemy_token = match enemy_sign {
-        "A" => Token::Rock,
-        "B" => Token::Paper,
-        "C" => Token::Sissor,
-        _ => return 0,
-    };
+    let Some(my_token) = match_sign(my_sign) else { return 0 };
+    let Some(enemy_token) = match_sign(enemy_sign) else { return 0 };
 
     let token_points = my_token.get_value();
     let match_points = my_token.get_match_points(&enemy_token);
