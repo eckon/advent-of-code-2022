@@ -46,6 +46,10 @@ fn main() {
             println!("Result part 1: {}", puzzle::day5::part1(&content));
             println!("Result part 2: {}", puzzle::day5::part2(&content));
         }
+        6 => {
+            println!("Result part 1: {}", puzzle::day6::part1(&content));
+            println!("Result part 2: {}", puzzle::day6::part2(&content));
+        }
         not_found_day => {
             println!("Day \"{not_found_day}\" implementation was not found");
             println!("To run specific advent of code day, pass the day [1, 2, ..., 25]");
